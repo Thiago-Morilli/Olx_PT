@@ -34,11 +34,11 @@ class ProductsSpider(scrapy.Spider):
             headers=self.headers,
             callback= self.car_request
         )
-
+ 
     def car_request(self, response):
         for get_link in response.xpath('//div[@class="css-1apmciz"]/div[@data-cy="ad-card-title"]/a[@class="css-qo0cxu"]/@href').getall():
             link = self.domains + get_link
-            print(link)
+            
 
             yield scrapy.Request(
                 url=link,
@@ -58,12 +58,13 @@ class ProductsSpider(scrapy.Spider):
         self.collecting_data["Brand"] = json_info["brand"]
         self.collecting_data["production_data"] = json_info["productionDate"]
         self.collecting_data["City"] = json_info["offers"]["areaServed"]["name"]
-        self.collecting_data["Description"] = json_info["description"]
+        self.collecting_data["Description"] = json_info["description"]#.raplace("✅", "")
 
         yield OlxPtItem(
             self.collecting_data
         )
-        
+         
+
 
     def page(self, response):
         print
