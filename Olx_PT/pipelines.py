@@ -1,23 +1,18 @@
-import mysql.connector
+from Olx_DataBase.Mysql_connection import Mysql_Connector
 from Olx_PT.items import OlxPtItem
 
 
 class OlxPtPipeline:
     def process_item(self, item, spider):
+        #print(item)
+        
 
         self.save_mysql(item)
 
     def save_mysql(self, item):
-
-        db_connection = mysql.connector.connect(
-        host="127.0.0.1",
-        port=3306,
-        user="root",
-        password="998674629Th.",
-        database="Scrapy_Olx"
-        )
-
-        cursor = db_connection.cursor()
+        connector = Mysql_Connector.Connection()
+        cursor = connector[0]
+        db_connection = connector[1]
 
         cursor.execute(
            '''CREATE TABLE IF NOT EXISTS Cars(

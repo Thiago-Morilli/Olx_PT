@@ -51,12 +51,13 @@ class ProductsSpider(scrapy.Spider):
     def cars(self, response):
         path_json = response.xpath('//script[@type="application/ld+json"]/text()').extract_first()
         json_info =  json.loads(path_json)
-
+        
         self.collecting_data["Title"] = json_info["name"]
         self.collecting_data["Model"] = json_info["model"]
         self.collecting_data["Price"] = json_info["offers"]["price"]
         self.collecting_data["Brand"] = json_info["brand"]
         self.collecting_data["production_data"] = json_info["productionDate"]
+        print(self.collecting_data["production_data"])
         self.collecting_data["City"] = json_info["offers"]["areaServed"]["name"]
         self.collecting_data["Description"] = json_info["description"]#.raplace("✅", "")
 
